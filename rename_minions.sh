@@ -10,10 +10,10 @@ fi
 MAX_MINIONS=$1
 
 # Update this if your master container has a different name!
-MASTER_CONTAINER="docker-saltstack-salt-master-1"
+MASTER_CONTAINER="docker-saltstack-sandbox-salt-master-1"
 
 for i in $(seq 1 $MAX_MINIONS); do
-  CONTAINER_NAME="docker-saltstack-salt-minion-$i"
+  CONTAINER_NAME="docker-saltstack-sandbox-salt-minion-$i"
   NEW_ID="minion-$i"
 
   echo "Updating $CONTAINER_NAME to $NEW_ID..."
@@ -24,16 +24,10 @@ for i in $(seq 1 $MAX_MINIONS); do
   # Write the new ID configuration into the container
   docker exec $CONTAINER_NAME sh -c "echo 'id: $NEW_ID' > /etc/salt/minion.d/id.conf"
 
-  # Restart ONLY the salt-minion service inside the container
   docker restart $CONTAINER_NAME >/dev/null
-
-  echo "Container restarted. Waiting for minion to send its new key to the master..."
-
-  # Delete the old container ID key from the master (suppressing errors if it doesn't exist)
+  # remove old salt keys, new keys are auto accepted
   docker exec $MASTER_CONTAINER salt-key -y -d "$OLD_ID" >/dev/null 2>&1
-
-  # Accept the new friendly ID key on the master
-  docker exec $MASTER_CONTAINER salt-key -y -a "$NEW_ID"
+  echo "Container restarted. Waiting for minion to send its new key to the master..."
 
   echo "Successfully updated minion, and accepted $NEW_ID on the Master."
   echo "----------------------------------------"
