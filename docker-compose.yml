@@ -1,5 +1,3 @@
-version: '3.7'
-
 services: 
   salt-master:
     build:
