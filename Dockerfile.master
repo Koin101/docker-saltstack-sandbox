@@ -1,9 +1,8 @@
 FROM ubuntu:24.04
-MAINTAINER tim@cyface.com
 
 ENV APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=1
 # Prevent interactive prompts during package installation
-RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections [cite: 1, 2]
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 
 # Install dependencies needed for repository setup
 RUN apt-get update -y && \
@@ -12,6 +11,16 @@ RUN apt-get update -y && \
 
 RUN apt install sudo -y && \
     apt install vim -y 
+
+# Configure Vim specifically for YAML editing
+RUN { \
+      echo 'syntax on'; \
+      echo 'filetype plugin indent on'; \
+      echo 'autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab autoindent'; \
+      echo 'set tabstop=2'; \
+      echo 'set shiftwidth=2'; \
+      echo 'set expandtab'; \
+    } > /root/.vimrc
 
 # 1. Setup Salt Project repository 
 # Ensure keyrings directory exists

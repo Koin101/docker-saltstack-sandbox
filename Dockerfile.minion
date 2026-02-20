@@ -11,6 +11,17 @@ RUN apt-get update -y && \
 
 RUN apt install sudo -y && \
   apt install vim -y
+
+# Configure Vim specifically for YAML editing
+RUN { \
+  echo 'syntax on'; \
+  echo 'filetype plugin indent on'; \
+  echo 'autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab autoindent'; \
+  echo 'set tabstop=2'; \
+  echo 'set shiftwidth=2'; \
+  echo 'set expandtab'; \
+  } > /root/.vimrc
+
 # 1. Setup Salt Project repository 
 # Ensure keyrings dir exists 
 RUN mkdir -p /etc/apt/keyrings
@@ -28,8 +39,8 @@ RUN apt-get update -y && \
   apt-get install -y salt-minion salt-ssh && \
   apt-get clean all
 
-# Configuration: Point the minion to the 'salt-master' hostname [cite: 4]
+# Configuration: Point the minion to the 'salt-master' hostname
 RUN sed -i "s|#master: salt|master: salt-master|g" /etc/salt/minion
 
-# Start the minion in debug mode [cite: 4]
+# Start the minion in debug mode
 ENTRYPOINT ["salt-minion", "-l", "debug"]
