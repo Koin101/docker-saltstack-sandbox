@@ -16,6 +16,7 @@ RUN apt install sudo -y && \
 RUN { \
       echo 'syntax on'; \
       echo 'filetype plugin indent on'; \
+      echo 'autocmd BufNewFile,BufRead *.sls set filetype=yaml'; \
       echo 'autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab autoindent'; \
       echo 'set tabstop=2'; \
       echo 'set shiftwidth=2'; \

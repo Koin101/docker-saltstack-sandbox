@@ -14,13 +14,14 @@ RUN apt install sudo -y && \
 
 # Configure Vim specifically for YAML editing
 RUN { \
-  echo 'syntax on'; \
-  echo 'filetype plugin indent on'; \
-  echo 'autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab autoindent'; \
-  echo 'set tabstop=2'; \
-  echo 'set shiftwidth=2'; \
-  echo 'set expandtab'; \
-  } > /root/.vimrc
+      echo 'syntax on'; \
+      echo 'filetype plugin indent on'; \
+      echo 'autocmd BufNewFile,BufRead *.sls set filetype=yaml'; \
+      echo 'autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab autoindent'; \
+      echo 'set tabstop=2'; \
+      echo 'set shiftwidth=2'; \
+      echo 'set expandtab'; \
+    } > /root/.vimrc
 
 # 1. Setup Salt Project repository 
 # Ensure keyrings dir exists 
