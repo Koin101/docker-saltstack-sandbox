@@ -1,38 +1,69 @@
+# 🧂 Docker-SaltStack Sandbox
 
-# docker-saltstack
+A streamlined Docker Compose environment designed to spin up a **Salt Master** and **Minions** for testing and development.
 
-Docker Compose setup to spin up a salt master and minions.
+### 📋 Prerequisites
 
-You will need a system with Docker and Docker Compose installed to use this project.
+Ensure you have the following installed on your system:
 
-Just run:
+* **Docker**
+* **Docker Compose**
 
-`docker compose up -d`
+---
 
-Then you can run :
+## 🚀 Getting Started
 
-`docker compose exec salt-master bash`
+1. **Launch the environment:**
 
-and it will log you into the command line of the salt-master server.
+    ```bash
+    docker compose up -d
+    ```
 
-From that command line you can run something like:
+2. **Access the Salt Master:**
 
-`salt '*' test.ping`
+    ```bash
+    docker compose exec salt-master bash
+    ```
 
-and in the window where you started docker compose, you will see the log output of both the master sending the command and the minion receiving the command and replying.
+3. **Verify the connection:**
+Once inside the master's shell, run:
 
-The salt-master is set up to accept all minions that try to connect.  Since the network that the salt-master sees is only the docker-compose network, this means that only minions within this docker-compose service network will be able to connect (and not random other minions external to docker).
+    ```bash
+    salt '*' test.ping
+    ```
 
-#### Running multiple minions
+*Note: You can watch the live log output in your initial terminal window to see the master/minion handshake in real-time.*
 
-`docker-compose up --scale salt-minion=2`
+---
 
-This will start up two minions instead of just one.
+## 🛠️ Configuration & Scaling
 
-#### Host Names
+### Running Multiple Minions
 
-Run the `rename_minions.sh 'number of minions'` script to rename the hostnames. Otherwise the hostnames in salt are set to the container ids making it harder to reference them.
-The script currently sets the hostname to minion-x where x a number from 1 to the number provided to the script.
+To scale your infrastructure and test multi-node configurations, use the `--scale` flag:
 
-# Scenarios
-I asked Gemini to create different scenarios to practice salt. They can be found in `Scenarios` folder. This is a work in progress. 
+```bash
+docker compose up -d --scale salt-minion=2
+```
+
+### Managing Hostnames
+
+By default, Salt uses container IDs as hostnames. To make them more readable (e.g., `minion-1`, `minion-2`), run the provided helper script:
+
+```bash
+./rename_minions.sh <number_of_minions>
+```
+
+---
+
+## 📖 Learning Scenarios
+
+Looking for practice? Check out the `Scenarios` folder. These exercises were generated to help you master Salt states and orchestration.
+*Status: 🏗️ Work in Progress.*
+
+---
+
+## ⚠️ Important Note on Persistence
+
+> **Warning:** This environment is currently **ephemeral**.
+> Any changes made directly inside the containers will be lost when they are removed. Always save your `.sls` state files and configuration changes to your local machine to ensure you can resume your work later.
