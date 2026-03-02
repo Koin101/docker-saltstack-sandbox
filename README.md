@@ -2,7 +2,7 @@
 
 A streamlined Docker Compose environment designed to spin up a **Salt Master** and **Minions** for testing and development.
 
-### 📋 Prerequisites
+## 📋 Prerequisites
 
 Ensure you have the following installed on your system:
 
