@@ -34,3 +34,5 @@ This will start up two minions instead of just one.
 Run the `rename_minions.sh 'number of minions'` script to rename the hostnames. Otherwise the hostnames in salt are set to the container ids making it harder to reference them.
 The script currently sets the hostname to minion-x where x a number from 1 to the number provided to the script.
 
+# Scenarios
+I asked Gemini to create different scenarios to practice salt. They can be found in `Scenarios` folder. This is a work in progress. 
