@@ -33,4 +33,4 @@ This will start up two minions instead of just one.
 
 Run the `rename_minions.sh 'number of minions'` script to rename the hostnames. Otherwise the hostnames in salt are set to the container ids making it harder to reference them.
 The script currently sets the hostname to minion-x where x a number from 1 to the number provided to the script.
-If you are running more than one minion with `--scale=2`, you will need to use `docker-saltstack_salt-minion_1` and `docker-saltstack_salt-minion_2` for the minions if you want to target them individually.
+
