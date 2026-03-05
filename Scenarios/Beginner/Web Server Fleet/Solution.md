@@ -3,7 +3,7 @@
 Below a possible solution is shown. Note that there are lots of ways to reach the same goal. I will also show some issues I ran into when solving the scenario. Possible in the future automated ways to check if solution is correct.
 
 ## State File
-
+Place the state file in `/src/salt/`
 ```yaml
 install_nginx:
     pkg.installed:
