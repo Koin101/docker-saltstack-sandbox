@@ -40,7 +40,7 @@ Your task is to configure these servers based on specific roles. You need to dep
 
 * Make the `index.html` file a **Jinja template**.
 * The generated HTML must output the following text dynamically:
-> Hello from **<Minion ID>**! I am a **<Role>** server in the **<Environment>** environment.
+> Hello from **\<Minion ID\>**! I am a **\<Role\>** server in the **\<Environment\>** environment.
 
 
 
